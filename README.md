@@ -1,6 +1,6 @@
 # etc-nix
 
-Reusable Nix builds of the Ethereum Classic clients (core-geth, getc, Nethermind, Besu) plus two
+Reusable Nix builds of the Ethereum Classic clients (core-geth, getc, Nethermind, Besu) plus three
 experiment factories:
 
 - **`lib.mkReplay`** — a consensus-replay machine: feed a client an Era1 archive and re-execute the
@@ -9,6 +9,9 @@ experiment factories:
   chain id): a core-geth miner + getc/Nethermind/Besu followers in a WireGuard/netns mesh, an
   eth-netstats dashboard, and the spamoor "Fuzzing" group cross-checking the clients on real state
   transitions.
+- **`lib.mkSyncCheck`** — a release gate: one Nethermind+ETC node from a published release bundle,
+  snap syncing to head or full syncing from genesis, polled over JSON-RPC by whoever provisioned it.
+  `packages.sync-check` installs one onto a fresh VM with nixos-anywhere and fetches its logs.
 
 ## Use it
 
@@ -26,7 +29,7 @@ first activation, networking, and reading a deploy's exit status.
 
 ## Outputs
 
-- `lib.{mkReplay,mkDevnet}`
+- `lib.{mkReplay,mkDevnet,mkSyncCheck}`
 - `nixosModules.{coreGeth,nethermind,besu,consensusReplay,devnetMesh,devnetNetnsMesh,spamoor,ethNetstats,ethstatsHashrateProxy}`
-- `packages` / `overlays.default` — the pinned reference client builds
+- `packages` / `overlays.default` — the pinned reference client builds; `packages.sync-check`
 - `templates.{replay,devnet}`, `apps.replay`
