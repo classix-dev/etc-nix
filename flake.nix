@@ -123,6 +123,41 @@
           ];
         };
 
+      # Release gate: one ephemeral Nethermind+ETC node from a published bundle, watched from
+      # outside (see hosts/sync-check). kind = "snap" | "genesis"; `hash` is the SRI hash of the
+      # release's linux-x64 bundle; rpcAllowFrom = the poller's addresses.
+      mkSyncCheck =
+        {
+          kind,
+          version,
+          hash,
+          rpcAllowFrom,
+          disk ? "/dev/vda",
+          sshKeys ? [ ],
+        }:
+        assert nixpkgs.lib.assertOneOf "mkSyncCheck kind" kind [
+          "snap"
+          "genesis"
+        ];
+        nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs sshKeys;
+            syncCheck = {
+              inherit
+                kind
+                version
+                hash
+                rpcAllowFrom
+                disk
+                ;
+            };
+          };
+          modules = [
+            inputs.disko.nixosModules.disko
+            ./hosts/sync-check
+          ];
+        };
+
       treefmtFor =
         pkgs:
         treefmt-nix.lib.evalModule pkgs {
@@ -134,7 +169,13 @@
     in
     {
       # ── the tool's public API ──────────────────────────────────────────────────────────
-      lib = { inherit mkReplay mkDevnet; };
+      lib = {
+        inherit
+          mkReplay
+          mkDevnet
+          mkSyncCheck
+          ;
+      };
 
       nixosModules = {
         coreGeth = ./modules/clients/core-geth.nix;
@@ -172,7 +213,20 @@
         };
       };
 
-      packages = forAllSystems clientPkgs;
+      nixosConfigurations.example-sync-check = mkSyncCheck {
+        kind = "snap";
+        version = "2.0.0.0";
+        hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+        rpcAllowFrom = [ "192.0.2.1" ];
+      };
+
+      packages = forAllSystems (
+        pkgs:
+        clientPkgs pkgs
+        // {
+          sync-check = pkgs.callPackage ./pkgs/sync-check { etc-nix = self; };
+        }
+      );
       overlays.default = final: _prev: clientPkgs final;
 
       templates.replay = {
