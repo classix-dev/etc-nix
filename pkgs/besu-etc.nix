@@ -1,5 +1,5 @@
 # besu-etc = Hyperledger Besu (ETC fork) + the ETC plugin, built FROM SOURCE by replicating
-# the diega/besu-etc-plugin release. Counterpart of pkgs/besu-etc-bin.nix (which fetches the
+# the besu-etc/besu-etc-plugin release. Counterpart of pkgs/besu-etc-bin.nix (which fetches the
 # CI-combined bundle): here the plugin jar is compiled locally and swapped into a fetched
 # base bundle, so you can test an unreleased plugin branch without waiting for CI.
 #
@@ -37,7 +37,7 @@
 
   # --- base bundle (fetch-release; besuVersion must match the bundle's jars) ---
   besuVersion,
-  bundleRepo ? "diega/besu-etc-plugin",
+  bundleRepo ? "besu-etc/besu-etc-plugin",
   bundleTag ? besuVersion,
   bundleArtifact ? bundleTag,
   bundleUrl ? "https://github.com/${bundleRepo}/releases/download/${bundleTag}/besu-etc-${bundleArtifact}.tar.gz",
@@ -178,7 +178,7 @@ stdenv.mkDerivation (finalAttrs: {
   version = besuVersion;
 
   src = fetchFromGitHub {
-    owner = "diega";
+    owner = "besu-etc";
     repo = "besu-etc-plugin";
     rev = pluginRev;
     hash = pluginHash;
@@ -254,7 +254,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   meta = {
     description = "Hyperledger Besu ETC client (plugin built from source + fetched base bundle)";
-    homepage = "https://github.com/diega/besu-etc-plugin";
+    homepage = "https://github.com/besu-etc/besu-etc-plugin";
     license = lib.licenses.asl20;
     mainProgram = "besu";
     platforms = [ "x86_64-linux" ];

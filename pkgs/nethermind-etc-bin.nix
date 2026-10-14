@@ -23,7 +23,7 @@
   icu,
   snappy,
   version,
-  url ? "https://github.com/ETCCooperative/nethermind-etc-plugin/releases/download/v${version}/nethermind-etc-v${version}-linux-x64.zip",
+  url ? "https://github.com/nethermindEtc/nethermind-etc-plugin/releases/download/v${version}/nethermind-etc-v${version}-linux-x64.zip",
   hash,
   # Wire the shipped NLog-json.config (JSON-per-line error log → events.jsonl) into
   # NLog.config, so etc.sentryReporter (file_jsonl) has a source. Mirrors the
@@ -92,7 +92,7 @@ stdenv.mkDerivation {
 
   meta = {
     description = "Nethermind Ethereum Classic client (self-contained build)";
-    homepage = "https://github.com/ETCCooperative/nethermind-etc-plugin";
+    homepage = "https://github.com/nethermindEtc/nethermind-etc-plugin";
     license = lib.licenses.lgpl3Plus; # Nethermind is LGPL-3.0-only
     sourceProvenance = [ lib.sourceTypes.binaryNativeCode ];
     mainProgram = "nethermind";

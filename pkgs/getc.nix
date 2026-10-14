@@ -1,4 +1,4 @@
-# getc = go-ethereum-classic (diega/go-ethereum-classic) compiled FROM SOURCE — the
+# getc = go-ethereum-classic compiled FROM SOURCE — the
 # counterpart of pkgs/core-geth.nix for the getc fork. Use this to run a branch/PR/commit
 # that does NOT yet have a published release (the "test-getc" node runs whatever ref you
 # point it at). To run an already-published release tarball without compiling, use
@@ -14,7 +14,7 @@
 #   }
 #
 # Bumping: change version/rev and refresh the two hashes:
-#   1. srcHash    → `nix run nixpkgs#nix-prefetch-github -- diega go-ethereum-classic --rev <rev>`
+#   1. srcHash    → `nix run nixpkgs#nix-prefetch-github -- go-ethereum-classic go-ethereum-classic --rev <rev>`
 #   2. vendorHash → leave lib.fakeHash, `nix build .#getc`, paste the hash from the error.
 # To build a tree that is not a commit of the repo above — a fork, or a local checkout —
 # pass `srcOverride`; it replaces the fetch below and makes srcHash unused. (It cannot be
@@ -31,7 +31,7 @@
   srcOverride ? null,
 }:
 assert lib.assertMsg (srcOverride != null || srcHash != null)
-  "getc: pass srcHash to fetch a commit of diega/go-ethereum-classic, or srcOverride to build a fork or local tree.";
+  "getc: pass srcHash to fetch a commit of go-ethereum-classic/go-ethereum-classic, or srcOverride to build a fork or local tree.";
 buildGoModule {
   pname = "getc";
   inherit version vendorHash;
@@ -41,7 +41,7 @@ buildGoModule {
       srcOverride
     else
       fetchFromGitHub {
-        owner = "diega";
+        owner = "go-ethereum-classic";
         repo = "go-ethereum-classic";
         inherit rev;
         hash = srcHash;
@@ -63,8 +63,8 @@ buildGoModule {
   doCheck = false;
 
   meta = {
-    description = "go-ethereum-classic (getc) — geth fork for ETC (diega/go-ethereum-classic), build from source";
-    homepage = "https://github.com/diega/go-ethereum-classic";
+    description = "go-ethereum-classic (getc) — geth fork for ETC, build from source";
+    homepage = "https://github.com/go-ethereum-classic/go-ethereum-classic";
     license = lib.licenses.gpl3Plus;
     mainProgram = "geth";
     platforms = lib.platforms.linux;
