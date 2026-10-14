@@ -1,6 +1,6 @@
 # besu-legacy = Hyperledger Besu 25.x — the LAST upstream Besu that shipped native ETC
 # support (classic/mordor built in). Upstream dropped native ETC afterward, which is why
-# the ETC client now lives as the diega/besu-etc-plugin fork — built from source by
+# the ETC client now lives as the besu-etc/besu-etc-plugin fork — built from source by
 # pkgs/besu-etc.nix (replicates the plugin's release job) or fetched via pkgs/besu-etc-bin.nix
 # (the CI release). This packages that frozen pre-divergence upstream release; keep it for
 # hosts still on the old client (e.g. besu-mordor-release-mining).

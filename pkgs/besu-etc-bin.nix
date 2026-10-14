@@ -1,5 +1,5 @@
-# besu-etc = Hyperledger Besu (fork diega/besu) + the ETC plugin, shipped as the prebuilt
-# distribution the diega/besu-etc-plugin CI publishes (like pkgs/nethermind-etc-bin.nix —
+# besu-etc = Hyperledger Besu (fork besu-etc/besu) + the ETC plugin, shipped as the prebuilt
+# distribution the besu-etc/besu-etc-plugin CI publishes (like pkgs/nethermind-etc-bin.nix —
 # a released bundle, not built from source). Use this for the "test-besu" / release Besu
 # node running an ETC plugin build. For the frozen last-upstream-with-ETC client, use
 # pkgs/besu-legacy.nix; to build the ETC-plugin client from source, use pkgs/besu-etc.nix.
@@ -10,9 +10,8 @@
 # pkgs/besu-legacy.nix (unpack, keep bin/lib/plugins, wrap the launcher with JAVA_HOME + jemalloc
 # on LD_LIBRARY_PATH — Besu extracts bundled JNI natives at runtime and links against these).
 #
-# Release naming (see diega/besu-etc-plugin .github/workflows/release.yml). The combined
-# bundle asset is `besu-etc-<artifact>.tar.gz`, published on both diega/besu and
-# diega/besu-etc-plugin:
+# Release naming (see besu-etc/besu-etc-plugin .github/workflows/release.yml). The combined
+# bundle asset is `besu-etc-<artifact>.tar.gz`, published on besu-etc/besu-etc-plugin:
 #   - stable:       tag == artifact, e.g. "26.6.1-etc"
 #   - pre-release:  tag == artifact, e.g. "26.7.0-etc-SNAPSHOT"
 #   - experimental: artifact = "<tag>-<shortSHA>"
@@ -34,7 +33,7 @@
   runtimeJdk ? jdk25_headless,
   tag,
   artifact ? tag,
-  url ? "https://github.com/diega/besu-etc-plugin/releases/download/${tag}/besu-etc-${artifact}.tar.gz",
+  url ? "https://github.com/besu-etc/besu-etc-plugin/releases/download/${tag}/besu-etc-${artifact}.tar.gz",
   hash,
 }:
 stdenv.mkDerivation {
@@ -63,8 +62,8 @@ stdenv.mkDerivation {
   '';
 
   meta = {
-    description = "Hyperledger Besu with the ETC plugin (diega/besu-etc-plugin distribution)";
-    homepage = "https://github.com/diega/besu-etc-plugin";
+    description = "Hyperledger Besu with the ETC plugin (besu-etc/besu-etc-plugin distribution)";
+    homepage = "https://github.com/besu-etc/besu-etc-plugin";
     license = lib.licenses.asl20;
     sourceProvenance = [ lib.sourceTypes.binaryBytecode ];
     mainProgram = "besu";

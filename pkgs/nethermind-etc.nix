@@ -9,7 +9,7 @@
 #                Compiles against Nethermind.ReferenceAssemblies (NuGet), NOT Nethermind source.
 #   2. base    — a published Nethermind release zip (fetch-release). Default is upstream
 #                NethermindEth/nethermind; for a patched base point baseRepo/baseTag at the
-#                diega/nethermind_etc fork's release (also published) — same fetch, different
+#                nethermindEtc/nethermind fork's release (also published) — same fetch, different
 #                repo/tag/hash. A from-source base build is not needed for Nethermind.
 #   3. combine — drop the plugin dll into <base>/plugins, add chainspecs/ + configs/ from the
 #                plugin tree, then autoPatchelf + wrap the apphost exactly like nethermind-etc-bin.
@@ -35,7 +35,7 @@
   snappy,
 
   # --- plugin (always compiled) ---
-  pluginOwner ? "ETCCooperative",
+  pluginOwner ? "nethermindEtc",
   pluginRepo ? "nethermind-etc-plugin",
   pluginRev,
   version,
@@ -142,7 +142,7 @@ stdenv.mkDerivation {
 
   meta = {
     description = "Nethermind Ethereum Classic client (plugin built from source + fetched base release)";
-    homepage = "https://github.com/ETCCooperative/nethermind-etc-plugin";
+    homepage = "https://github.com/nethermindEtc/nethermind-etc-plugin";
     license = lib.licenses.lgpl3Plus;
     mainProgram = "nethermind";
     platforms = [ "x86_64-linux" ];
